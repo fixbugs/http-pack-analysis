@@ -48,6 +48,9 @@ class Http_Package_Analysis{
         return $this->result;
     }
 
+    /**
+     * Analysis server info for url and sth.
+     */
     private function _urlInfoAnalysis(){
         $this->result['url'] = $this->httpServers['HTTP_HOST'].$this->httpServers['REQUEST_URI'];
         $this->result['refer'] = isset($this->httpServers['HTTP_REFERER']) ? $this->httpServers['HTTP_REFERER']:'';
