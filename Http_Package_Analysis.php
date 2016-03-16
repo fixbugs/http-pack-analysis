@@ -44,7 +44,17 @@ class Http_Package_Analysis{
     }
 
     public function analysisResult(){
-        return $result;
+        $this->_urlInfoAnalysis();
+        return $this->result;
+    }
+
+    private function _urlInfoAnalysis(){
+        $this->result['url'] = $this->httpServers['HTTP_HOST'].$this->httpServers['REQUEST_URI'];
+        $this->result['refer'] = isset($this->httpServers['HTTP_REFERER']) ? $this->httpServers['HTTP_REFERER']:'';
+        $this->result['now_page_url'] = $this->result['url'];
+        $this->result['now_url_md5'] = md5($this->result['url']);
+        $this->result['pre_page_url'] = $this->result['refer'];
+        $this->result['pre_url_md5'] = $this->result['refer'] ? md5($this->result['refer']):'';
     }
 
 
