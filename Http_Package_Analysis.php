@@ -61,19 +61,29 @@ class Http_Package_Analysis{
         $this->result['pre_url_md5'] = $this->result['refer'] ? md5($this->result['refer']):'';
     }
 
+    /**
+     * Analysis time info form server.
+     */
     private function _timeInfoAnalysis(){
         $this->result['create_time'] = isset($this->httpServers['REQUEST_TIME']) ? $this->httpServers['REQUEST_TIME']:time();
     }
 
+    /**
+     * Analysis ip info form server.
+     */
     private function _IPInfoAnalysis(){
-        //get user ip frist
         $ip = $this->_getClientIp();
-        $this->result['ip'] = $ip;
+        $this->result['user_ip'] = $ip;
         $this->result['ip_md5'] = md5($ip);
         $city_info = self::getCityInfoByIp($ip);
         $this->result = array_merge($this->result, $city_info);
     }
 
+    /**
+     * Get city info by ip from taobao ip library without IP checked
+     * @param string $ip IP
+     * @return array
+     */
     static public function getCityInfoByIp($ip){
         $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
         $res = self::curl_get($url);
@@ -103,7 +113,16 @@ class Http_Package_Analysis{
         return $result['data'];
     }
 
-    static public function curl_get($url, $data = array(), $header = array(), $timeout = 3, $port = 80){
+    /**
+     * curl get for url
+     * @param string $url url
+     * @param array $data params need to send
+     * @param array $header Http request header
+     * @param int $timeout Max request for connect
+     * @param int $port Port for request
+     * @return array
+     */
+    static public function curl_get($url, $data = array(), $header = array(), $timeout = 5, $port = 80){
         $start_time = time();
         $req_data = $data;
         $ch = curl_init();
@@ -138,6 +157,11 @@ class Http_Package_Analysis{
         return $result;
     }
 
+    /**
+     * Get client info from httpServers
+     * @param bool $checkProxy Is need to check proxy
+     * @return string
+     */
     private function _getClientIp($checkProxy = true)
     {
         $ip = '127.0.0.1';
