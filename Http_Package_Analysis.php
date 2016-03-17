@@ -165,13 +165,13 @@ class Http_Package_Analysis{
     private function _getClientIp($checkProxy = true)
     {
         $ip = '127.0.0.1';
-        if($checkProxy && isset($this->httpServers['HTTP_CLIENT_IP']))
+        if($checkProxy && isset($this->httpServers['HTTP_CLIENT_IP'])){
             $ip = $this->httpServers['HTTP_CLIENT_IP'];
-        elseif($checkProxy && isset($this->httpServers['HTTP_X_FORWARDED_FOR']))
+        }elseif($checkProxy && isset($this->httpServers['HTTP_X_FORWARDED_FOR'])){
             $ip = $this->httpServers['HTTP_X_FORWARDED_FOR'];
-        elseif(!empty($this->httpServers['REMOTE_ADDR']))
+        }elseif(!empty($this->httpServers['REMOTE_ADDR'])){
             $ip = $this->httpServers['REMOTE_ADDR'];
-
+        }
         return $ip;
     }
 
