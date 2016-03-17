@@ -43,9 +43,14 @@ class Http_Package_Analysis{
         return $this->httpServers;
     }
 
+    /**
+     * Analysis manage
+     */
     public function analysisResult(){
         $this->_urlInfoAnalysis();
-        $this->_IPInfoAnalysis();
+        $this->_iPInfoAnalysis();
+        $this->_timeInfoAnalysis();
+        $this->_userAgentInfoAnalysis();
         return $this->result;
     }
 
@@ -54,6 +59,8 @@ class Http_Package_Analysis{
      */
     private function _urlInfoAnalysis(){
         $this->result['url'] = $this->httpServers['HTTP_HOST'].$this->httpServers['REQUEST_URI'];
+        $this->result['domain'] = self::getUrlDomain($this->result['url']);
+        $this->result['domain_md5'] = md5($this->result['domain']);
         $this->result['refer'] = isset($this->httpServers['HTTP_REFERER']) ? $this->httpServers['HTTP_REFERER']:'';
         $this->result['now_page_url'] = $this->result['url'];
         $this->result['now_url_md5'] = md5($this->result['url']);
@@ -71,12 +78,17 @@ class Http_Package_Analysis{
     /**
      * Analysis ip info form server.
      */
-    private function _IPInfoAnalysis(){
+    private function _iPInfoAnalysis(){
         $ip = $this->_getClientIp();
         $this->result['user_ip'] = $ip;
         $this->result['ip_md5'] = md5($ip);
         $city_info = self::getCityInfoByIp($ip);
         $this->result = array_merge($this->result, $city_info);
+    }
+
+    private function _userAgentInfoAnalysis(){
+        $this->result['user_agent'] = isset($this->httpServers['HTTP_USER_AGENT']) ? $this->httpServers['HTTP_USER_AGENT']:'';
+        $this->result['user_agent_md5'] = $this->result['user_agent'] ? md5($this->result['user_agent']):'';
     }
 
     /**
@@ -173,6 +185,18 @@ class Http_Package_Analysis{
             $ip = $this->httpServers['REMOTE_ADDR'];
         }
         return $ip;
+    }
+
+    /**
+     * Get url domain
+     * @param string $url url
+     * @return string or false
+     */
+    static public function getUrlDomain($url){
+        if(preg_match('/^(https?:\/\/)?([a-z0-9.-]+)(\/.*)?$/i', $url,$matches)){
+            return $matches[2];
+        }
+        return false;
     }
 
 }
