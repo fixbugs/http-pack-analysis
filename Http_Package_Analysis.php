@@ -62,6 +62,7 @@ class Http_Package_Analysis{
         $this->result['domain'] = self::getUrlDomain($this->result['url']);
         $this->result['domain_md5'] = md5($this->result['domain']);
         $this->result['refer'] = isset($this->httpServers['HTTP_REFERER']) ? $this->httpServers['HTTP_REFERER']:'';
+        $this->result['refer_domain'] = $this->result['refer'] ? self::getUrlDomain($this->result['refer']):'';
         $this->result['now_page_url'] = $this->result['url'];
         $this->result['now_url_md5'] = md5($this->result['url']);
         $this->result['pre_page_url'] = $this->result['refer'];
@@ -107,6 +108,7 @@ class Http_Package_Analysis{
             'region' => '',
             'region_id' => '',
             'city' => '',
+            'city_en' => '',
             'city_id'  => '',
             'county' => '',
             'county_id' => '',
@@ -122,6 +124,9 @@ class Http_Package_Analysis{
         if(!$result['data']){
             return $default_result;
         }
+        require_once('StringToPY.php');
+        $stringtopy_class = new StringToPY();
+        $result['data']['city_en'] = $stringtopy_class->encode($result['data']['city']);
         return $result['data'];
     }
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * PHP 汉字转拼音
-  * @package SPFW.core.lib.final
+ * @package SPFW.core.lib.final
  * @global SEA_PHP_FW_VAR_ENV
  * @example
  *  echo CUtf8_PY::encode('阿里巴巴科技有限公司'); //编码为拼音首字母
