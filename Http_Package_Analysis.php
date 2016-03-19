@@ -47,6 +47,7 @@ class Http_Package_Analysis{
      * Analysis manage
      */
     public function analysisResult(){
+        var_dump($_SERVER);
         $this->_urlInfoAnalysis();
         $this->_iPInfoAnalysis();
         $this->_timeInfoAnalysis();
@@ -58,7 +59,12 @@ class Http_Package_Analysis{
      * Analysis server info for url and sth.
      */
     private function _urlInfoAnalysis(){
-        $this->result['url'] = $this->httpServers['HTTP_HOST'].$this->httpServers['REQUEST_URI'];
+        $uri = $this->httpServers['REQUEST_URI'];
+        $http = ( isset($this->httpServers['HTTPS']) && $this->httpServers['HTTPS'] !='off' ) ? 'https://':'http://';
+        $port = $this->httpServers['SERVER_PORT']==80 ? '':':'.$this->httpServers['SERVER_PORT'];
+
+        $this->result['url'] = $http . $this->httpServers['HTTP_HOST']. $port . $uri;
+
         $this->result['domain'] = self::getUrlDomain($this->result['url']);
         $this->result['domain_md5'] = md5($this->result['domain']);
         $this->result['refer'] = isset($this->httpServers['HTTP_REFERER']) ? $this->httpServers['HTTP_REFERER']:'';
@@ -67,6 +73,7 @@ class Http_Package_Analysis{
         $this->result['now_url_md5'] = md5($this->result['url']);
         $this->result['pre_page_url'] = $this->result['refer'];
         $this->result['pre_url_md5'] = $this->result['refer'] ? md5($this->result['refer']):'';
+        $this->result['request_method'] = $this->httpServers['REQUEST_METHOD'];
     }
 
     /**
