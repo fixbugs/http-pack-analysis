@@ -14,8 +14,14 @@ class Http_Package_Analysis{
      */
     protected $httpServers = array();
 
+    /**
+     * Analysis result store array
+     */
     protected $result = array();
 
+    /**
+     * Analysis init info with server input or self $_SERVER
+     */
     public function __construct(array $server=null){
         $this->setHttpServer($server);
     }
