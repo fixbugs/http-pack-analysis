@@ -47,7 +47,6 @@ class Http_Package_Analysis{
      * Analysis manage
      */
     public function analysisResult(){
-        var_dump($_SERVER);
         $this->_urlInfoAnalysis();
         $this->_iPInfoAnalysis();
         $this->_timeInfoAnalysis();
