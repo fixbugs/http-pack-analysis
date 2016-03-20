@@ -113,53 +113,37 @@ class Http_Package_Analysis{
      */
     private function _userEquipInfoAnalysis(){
         $equipment_info = self::getServerEquipmentInfo($this->httpServers);
-        $this->result['equipment'] = '';
-        $this->result['equipment_type'] = '';
-        $this->result['user_os'] = '';
+        $this->result['equipment'] = $equipment_info['equipment'] ? $equipment_info['equipment']:'';
+        $this->result['platform'] = $equipment_info['equipment_os'] ? $equipment_info['equipment_os']:'';
+        $this->result['equipment_type'] = $equipment_info['equipment_type'] ? $equipment_info['equipment_type']:'';
+        $this->result['user_browser'] = $equipment_info['equipment_browser'] ? $equipment_info['equipment_browser']:'';
     }
 
+    /**
+     * get server equipment info by SERVER.
+     * @param array $server $_SERVER
+     * @return array
+     */
     static public function getServerEquipmentInfo($server){
         require_once('Mobile_Detect.php');
         $result = array();
         $detect = new Mobile_Detect($server);
-        // $operatingSystems = $detect->getOperatingSystems();
-        // var_dump($operatingSystems);
-        // foreach($operatingSystems as $key=>$value){
-        //     if($detect->is($key)){
-        //         $result['equipment_os'] = $key;
-        //         break;
-        //     }
-        // }
         $is_mobile = $detect->isMobile();
         if($is_mobile){
-            if($detect->isTablet()){
-                $result['equipment_type'] = 'tablet';
-                if($detect->isIpad()){
-                    $result['equipment'] = 'iPad';
-                }elseif($detect->isKindle()){
-                    $result['equipment'] = 'Kindle';
-                }else{
-                    $result['equipment'] = 'OTHER_TABLET';
-                }
-            }else{
-                $result['equipment_type'] = 'mobile';
-                if($detect->isIphone()){
-                    $result['equipment'] = 'iPhone';
-                }else{
-                    $result['equipment'] = 'OTHER_MOBILE';
+            $mobileDetectRules = $detect->getMobileDetectionRules();
+            $tmp_arr = array();
+            foreach($mobileDetectRules as $k=>$v){
+                if($detect->is($k)){
+                    $tmp_arr[] = $k;
                 }
             }
-            if($detect->isIOS()){
-                $result['tablet_type'] = 'IOS';
-            }elseif($detect->isAndroid()){
-                $result['tablet_type'] = 'ANDROID';
-            }else{
-                $result['tablet_type'] = 'OTHER';
-            }
+            $result['equipment_type'] = 'tablet';
+            $result['equipment'] = $tmp_arr[0];
+            $result['equipment_os'] = $tmp_arr[1];
+            $result['equipment_browser'] = $tmp_arr[2];
         }else{
             $result['equipment_type'] = 'pc';
             $browsers = $detect->getBrowsers();
-            //var_dump($browsers);
             foreach($browsers as $k=>$v){
                 if($detect->is($k)){
                     $result['equipment_os'] = $k;
@@ -167,8 +151,7 @@ class Http_Package_Analysis{
                 }
             }
         }
-        //var_dump($result);
-        //die("dd");
+        return $result;
     }
 
     /**
