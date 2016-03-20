@@ -159,7 +159,7 @@ class Http_Package_Analysis{
         }else{
             $result['equipment_type'] = 'pc';
             $browsers = $detect->getBrowsers();
-            var_dump($browsers);
+            //var_dump($browsers);
             foreach($browsers as $k=>$v){
                 if($detect->is($k)){
                     $result['equipment_os'] = $k;
@@ -167,8 +167,8 @@ class Http_Package_Analysis{
                 }
             }
         }
-        var_dump($result);
-        die("dd");
+        //var_dump($result);
+        //die("dd");
     }
 
     /**
