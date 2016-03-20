@@ -57,6 +57,7 @@ class Http_Package_Analysis{
         $this->_iPInfoAnalysis();
         $this->_timeInfoAnalysis();
         $this->_userAgentInfoAnalysis();
+        $this->_userEquipInfoAnalysis();
         return $this->result;
     }
 
@@ -99,9 +100,21 @@ class Http_Package_Analysis{
         $this->result = array_merge($this->result, $city_info);
     }
 
+    /**
+     * Analysis user agent.
+     */
     private function _userAgentInfoAnalysis(){
         $this->result['user_agent'] = isset($this->httpServers['HTTP_USER_AGENT']) ? $this->httpServers['HTTP_USER_AGENT']:'';
         $this->result['user_agent_md5'] = $this->result['user_agent'] ? md5($this->result['user_agent']):'';
+    }
+
+    /**
+     * Analysis user equipment from server.
+     */
+    private function _userEquipInfoAnalysis(){
+        $this->result['equipment'] = '';
+        $this->result['equipment_type'] = '';
+        $this->result['user_os'] = '';
     }
 
     /**
