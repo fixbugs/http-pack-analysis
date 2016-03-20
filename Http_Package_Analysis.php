@@ -112,9 +112,63 @@ class Http_Package_Analysis{
      * Analysis user equipment from server.
      */
     private function _userEquipInfoAnalysis(){
+        $equipment_info = self::getServerEquipmentInfo($this->httpServers);
         $this->result['equipment'] = '';
         $this->result['equipment_type'] = '';
         $this->result['user_os'] = '';
+    }
+
+    static public function getServerEquipmentInfo($server){
+        require_once('Mobile_Detect.php');
+        $result = array();
+        $detect = new Mobile_Detect($server);
+        // $operatingSystems = $detect->getOperatingSystems();
+        // var_dump($operatingSystems);
+        // foreach($operatingSystems as $key=>$value){
+        //     if($detect->is($key)){
+        //         $result['equipment_os'] = $key;
+        //         break;
+        //     }
+        // }
+        $is_mobile = $detect->isMobile();
+        if($is_mobile){
+            if($detect->isTablet()){
+                $result['equipment_type'] = 'tablet';
+                if($detect->isIpad()){
+                    $result['equipment'] = 'iPad';
+                }elseif($detect->isKindle()){
+                    $result['equipment'] = 'Kindle';
+                }else{
+                    $result['equipment'] = 'OTHER_TABLET';
+                }
+            }else{
+                $result['equipment_type'] = 'mobile';
+                if($detect->isIphone()){
+                    $result['equipment'] = 'iPhone';
+                }else{
+                    $result['equipment'] = 'OTHER_MOBILE';
+                }
+            }
+            if($detect->isIOS()){
+                $result['tablet_type'] = 'IOS';
+            }elseif($detect->isAndroid()){
+                $result['tablet_type'] = 'ANDROID';
+            }else{
+                $result['tablet_type'] = 'OTHER';
+            }
+        }else{
+            $result['equipment_type'] = 'pc';
+            $browsers = $detect->getBrowsers();
+            var_dump($browsers);
+            foreach($browsers as $k=>$v){
+                if($detect->is($k)){
+                    $result['equipment_os'] = $k;
+                    break;
+                }
+            }
+        }
+        var_dump($result);
+        die("dd");
     }
 
     /**
