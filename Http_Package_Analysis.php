@@ -142,13 +142,14 @@ class Http_Package_Analysis{
             $result['equipment_os'] = $tmp_arr[1];
             $result['equipment_browser'] = $tmp_arr[2];
         }else{
+            require_once('PC_User_Agent.php');
+            $pc_user_agent = new PC_User_Agent($server);
             $result['equipment_type'] = 'pc';
-            $browsers = $detect->getBrowsers();
-            $properties = $detect->getProperties();
+            $browsers = $pc_user_agent->getMobileDetectionRules();
             $tmp_arr = array();
-            foreach($properties as $k=>$v){
-                if($detect->is($k)){
-                    $tmp[] = $k;
+            foreach($browsers as $k=>$v){
+                if($pc_user_agent->is($k)){
+                    $tmp_arr[] = $k;
                 }
             }
             var_dump($tmp_arr);

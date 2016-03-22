@@ -64,29 +64,11 @@ class PC_User_Agent
      * @var array
      */
     protected static $operatingSystems = array(
-        'AndroidOS'         => 'Android',
-        'BlackBerryOS'      => 'blackberry|\bBB10\b|rim tablet os',
-        'PalmOS'            => 'PalmOS|avantgo|blazer|elaine|hiptop|palm|plucker|xiino',
-        'SymbianOS'         => 'Symbian|SymbOS|Series60|Series40|SYB-[0-9]+|\bS60\b',
-        // @reference: http://en.wikipedia.org/wiki/Windows_Mobile
-        'WindowsMobileOS'   => 'Windows CE.*(PPC|Smartphone|Mobile|[0-9]{3}x[0-9]{3})|Window Mobile|Windows Phone [0-9.]+|WCE;',
-        // @reference: http://en.wikipedia.org/wiki/Windows_Phone
-        // http://wifeng.cn/?r=blog&a=view&id=106
-        // http://nicksnettravels.builttoroam.com/post/2011/01/10/Bogus-Windows-Phone-7-User-Agent-String.aspx
-        // http://msdn.microsoft.com/library/ms537503.aspx
-        // https://msdn.microsoft.com/en-us/library/hh869301(v=vs.85).aspx
-        'WindowsPhoneOS'   => 'Windows Phone 10.0|Windows Phone 8.1|Windows Phone 8.0|Windows Phone OS|XBLWP7|ZuneWP7|Windows NT 6.[23]; ARM;',
-        'iOS'               => '\biPhone.*Mobile|\biPod|\biPad',
-        // http://en.wikipedia.org/wiki/MeeGo
-        // @todo: research MeeGo in UAs
-        'MeeGoOS'           => 'MeeGo',
-        // http://en.wikipedia.org/wiki/Maemo
-        // @todo: research Maemo in UAs
-        'MaemoOS'           => 'Maemo',
-        'JavaOS'            => 'J2ME/|\bMIDP\b|\bCLDC\b', // '|Java/' produces bug #135
-        'webOS'             => 'webOS|hpwOS',
-        'badaOS'            => '\bBada\b',
-        'BREWOS'            => 'BREW',
+
+        'MacOS'        => 'Mac',
+        'WindowsOS'    => 'windows nt',
+        'LinuxOS'      => 'linux|ubuntu',
+        'UnixOS'       => 'unix|sunos|bsd',
     );
 
     /**
@@ -96,21 +78,21 @@ class PC_User_Agent
      */
     protected static $browsers = array(
         // @reference: https://developers.google.com/chrome/mobile/docs/user-agent
-        'Chrome'          => '\bCrMo\b|CriOS|Android.*Chrome/[.0-9]* (Mobile)?',
+        'Chrome'          => 'chrome',
         'Dolfin'          => '\bDolfin\b',
-        'Opera'           => 'Opera.*Mini|Opera.*Mobi|Android.*Opera|Mobile.*OPR/[0-9.]+|Coast/[0-9.]+',
+        'Opera'           => 'Opera',
         'Skyfire'         => 'Skyfire',
-        'IE'              => 'IEMobile|MSIEMobile', // |Trident/[.0-9]+
-        'Firefox'         => 'fennec|firefox.*maemo|(Mobile|Tablet).*Firefox|Firefox.*Mobile',
+        'IE'              => 'mise|MISE', // |Trident/[.0-9]+
+        'Firefox'         => 'firefox',
         'Bolt'            => 'bolt',
         'TeaShark'        => 'teashark',
         'Blazer'          => 'Blazer',
         // @reference: http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/OptimizingforSafarioniPhone.html#//apple_ref/doc/uid/TP40006517-SW3
-        'Safari'          => 'Version.*Mobile.*Safari|Safari.*Mobile|MobileSafari',
+        'Safari'          => 'safari|Safari',
         // http://en.wikipedia.org/wiki/Midori_(web_browser)
         //'Midori'          => 'midori',
         'Tizen'           => 'Tizen',
-        'UCBrowser'       => 'UC.*Browser|UCWEB',
+        'UCBrowser'       => 'UC',
         'baiduboxapp'     => 'baiduboxapp',
         'baidubrowser'    => 'baidubrowser',
         // https://github.com/serbanghita/Mobile-Detect/issues/7
@@ -527,8 +509,8 @@ class PC_User_Agent
 
         if (!$rules) {
             $rules = array_merge(
-                self::$phoneDevices,
-                self::$tabletDevices,
+                //self::$phoneDevices,
+                //self::$tabletDevices,
                 self::$operatingSystems,
                 self::$browsers
             );
@@ -555,8 +537,8 @@ class PC_User_Agent
         if (!$rules) {
             // Merge all rules together.
             $rules = array_merge(
-                self::$phoneDevices,
-                self::$tabletDevices,
+                //self::$phoneDevices,
+                //self::$tabletDevices,
                 self::$operatingSystems,
                 self::$browsers,
                 self::$utilities
@@ -693,7 +675,6 @@ class PC_User_Agent
                 $this->cache[$key] = false;
             }
         }
-
         return $this->cache[$key];
     }
 
