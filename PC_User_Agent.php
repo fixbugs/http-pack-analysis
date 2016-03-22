@@ -65,7 +65,7 @@ class PC_User_Agent
      */
     protected static $operatingSystems = array(
 
-        'MacOS'        => 'Mac',
+        'MacOS'        => 'Macintosh',
         'WindowsOS'    => 'windows nt',
         'LinuxOS'      => 'linux|ubuntu',
         'UnixOS'       => 'unix|sunos|bsd',
