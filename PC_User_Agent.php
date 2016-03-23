@@ -629,42 +629,6 @@ class PC_User_Agent
     }
 
     /**
-     * Check if the device is mobile.
-     * Returns true if any type of mobile device detected, including special ones
-     * @param  null $userAgent   deprecated
-     * @param  null $httpHeaders deprecated
-     * @return bool
-     */
-    public function isMobile($userAgent = null, $httpHeaders = null)
-    {
-
-        if ($httpHeaders) {
-            $this->setHttpHeaders($httpHeaders);
-        }
-
-        if ($userAgent) {
-            $this->setUserAgent($userAgent);
-        }
-
-        // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
-        if ($this->getUserAgent() === 'Amazon CloudFront') {
-            $cfHeaders = $this->getCfHeaders();
-            if(array_key_exists('HTTP_CLOUDFRONT_IS_MOBILE_VIEWER', $cfHeaders) && $cfHeaders['HTTP_CLOUDFRONT_IS_MOBILE_VIEWER'] === 'true') {
-                return true;
-            }
-        }
-
-        $this->setDetectionType(self::DETECTION_TYPE_MOBILE);
-
-        if ($this->checkHttpHeadersForMobile()) {
-            return true;
-        } else {
-            return $this->matchDetectionRulesAgainstUA();
-        }
-
-    }
-
-    /**
      * This method checks for a certain property in the
      * userAgent.
      * @todo: The httpHeaders part is not yet used.
