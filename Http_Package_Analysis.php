@@ -128,34 +128,34 @@ class Http_Package_Analysis{
         require_once('Mobile_Detect.php');
         $result = array();
         $detect = new Mobile_Detect($server);
-        $is_mobile = $detect->isMobile();
-        if($is_mobile){
+        $isMobile = $detect->isMobile();
+        if($isMobile){
             $mobileDetectRules = $detect->getMobileDetectionRules();
-            $tmp_arr = array();
+            $tmpArr = array();
             foreach($mobileDetectRules as $k=>$v){
                 if($detect->is($k)){
-                    $tmp_arr[] = $k;
+                    $tmpArr[] = $k;
                 }
             }
             $result['equipment_type'] = 'tablet';
-            $result['equipment'] = $tmp_arr[0];
-            $result['equipment_os'] = $tmp_arr[1];
-            $result['equipment_browser'] = $tmp_arr[2];
+            $result['equipment'] = $tmpArr[0];
+            $result['equipment_os'] = $tmpArr[1];
+            $result['equipment_browser'] = $tmpArr[2];
         }else{
             require_once('PC_User_Agent.php');
-            $pc_user_agent = new PC_User_Agent($server);
+            $pcUserAgent = new PC_User_Agent($server);
             $result['equipment_type'] = 'pc';
-            $browsers = $pc_user_agent->getBrowsers();
-            foreach($browsers as $k=>$v){
-                if($pc_user_agent->is($k)){
+            $browserRules = $pcUserAgent->getBrowsers();
+            foreach($browserRules as $k=>$v){
+                if($pcUserAgent->is($k)){
                     $browser = $k;
                     break;
                 }
             }
             $result['equipment_browser'] = $browser ? $browser:'';
-            $systems_rules = $pc_user_agent->getOperatingSystems();
-            foreach($systems_rules as $k=>$v){
-                if($pc_user_agent->is($k)){
+            $systemsRules = $pcUserAgent->getOperatingSystems();
+            foreach($systemsRules as $k=>$v){
+                if($pcUserAgent->is($k)){
                     $system = $k;
                     break;
                 }
@@ -174,7 +174,7 @@ class Http_Package_Analysis{
     static public function getCityInfoByIp($ip){
         $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
         $res = self::curl_get($url);
-        $default_result = array(
+        $defaultResult = array(
             'country' => '未知ip',
             'country' => '0',
             'area' => '',
@@ -193,14 +193,14 @@ class Http_Package_Analysis{
         if($res['result']){
             $result = json_decode($res['result'], true);
         }else{
-            return $default_result;
+            return $defaultResult;
         }
         if(!$result['data']){
-            return $default_result;
+            return $defaultResult;
         }
         require_once('StringToPY.php');
-        $stringtopy_class = new StringToPY();
-        $result['data']['city_en'] = $stringtopy_class->encode($result['data']['city']);
+        $stringtopyClass = new StringToPY();
+        $result['data']['city_en'] = $stringtopyClass->encode($result['data']['city']);
         return $result['data'];
     }
 
@@ -214,8 +214,6 @@ class Http_Package_Analysis{
      * @return array
      */
     static public function curl_get($url, $data = array(), $header = array(), $timeout = 5, $port = 80){
-        $start_time = time();
-        $req_data = $data;
         $ch = curl_init();
         if (!empty($data)) {
             $data = is_array($data) ? http_build_query($data) : $data;
