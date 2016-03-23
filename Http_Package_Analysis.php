@@ -173,7 +173,7 @@ class Http_Package_Analysis{
      */
     static public function getCityInfoByIp($ip){
         $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
-        $res = self::curl_get($url);
+        $res = self::curlGet($url);
         $defaultResult = array(
             'country' => '未知ip',
             'country' => '0',
@@ -213,7 +213,7 @@ class Http_Package_Analysis{
      * @param int $port Port for request
      * @return array
      */
-    static public function curl_get($url, $data = array(), $header = array(), $timeout = 5, $port = 80){
+    static public function curlGet($url, $data = array(), $header = array(), $timeout = 5, $port = 80){
         $ch = curl_init();
         if (!empty($data)) {
             $data = is_array($data) ? http_build_query($data) : $data;
