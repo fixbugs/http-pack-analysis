@@ -421,26 +421,6 @@ class PC_User_Agent
     }
 
     /**
-     * Retrieve the list of known phone devices.
-     *
-     * @return array List of phone devices.
-     */
-    public static function getPhoneDevices()
-    {
-        return self::$phoneDevices;
-    }
-
-    /**
-     * Retrieve the list of known tablet devices.
-     *
-     * @return array List of tablet devices.
-     */
-    public static function getTabletDevices()
-    {
-        return self::$tabletDevices;
-    }
-
-    /**
      * Alias for getBrowsers() method.
      *
      * @return array List of user agents.
@@ -483,8 +463,6 @@ class PC_User_Agent
 
         if (!$rules) {
             $rules = array_merge(
-                //self::$phoneDevices,
-                //self::$tabletDevices,
                 self::$operatingSystems,
                 self::$browsers
             );
@@ -511,8 +489,6 @@ class PC_User_Agent
         if (!$rules) {
             // Merge all rules together.
             $rules = array_merge(
-                //self::$phoneDevices,
-                //self::$tabletDevices,
                 self::$operatingSystems,
                 self::$browsers,
                 self::$utilities
