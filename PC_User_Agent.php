@@ -64,8 +64,7 @@ class PC_User_Agent
      * @var array
      */
     protected static $operatingSystems = array(
-
-        'MacOS'        => 'Macintosh',
+        'MacOS'        => 'Macintosh|mac',
         'WindowsOS'    => 'windows nt',
         'LinuxOS'      => 'linux|ubuntu',
         'UnixOS'       => 'unix|sunos|bsd',
@@ -78,36 +77,11 @@ class PC_User_Agent
      */
     protected static $browsers = array(
         // @reference: https://developers.google.com/chrome/mobile/docs/user-agent
-        'Chrome'          => 'chrome',
-        'Dolfin'          => '\bDolfin\b',
-        'Opera'           => 'Opera',
-        'Skyfire'         => 'Skyfire',
-        'IE'              => 'mise|MISE', // |Trident/[.0-9]+
-        'Firefox'         => 'firefox',
-        'Bolt'            => 'bolt',
-        'TeaShark'        => 'teashark',
-        'Blazer'          => 'Blazer',
-        // @reference: http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/OptimizingforSafarioniPhone/OptimizingforSafarioniPhone.html#//apple_ref/doc/uid/TP40006517-SW3
+        'Chrome'          => 'mozilla.*chrome',
+        'Opera'           => 'Opera.*presto|opera.*presto',
+        'IE'              => 'mozilla.*mise|mozilla.*MISE', // |Trident/[.0-9]+
+        'Firefox'         => 'firefox|',
         'Safari'          => 'safari|Safari',
-        // http://en.wikipedia.org/wiki/Midori_(web_browser)
-        //'Midori'          => 'midori',
-        'Tizen'           => 'Tizen',
-        'UCBrowser'       => 'UC',
-        'baiduboxapp'     => 'baiduboxapp',
-        'baidubrowser'    => 'baidubrowser',
-        // https://github.com/serbanghita/Mobile-Detect/issues/7
-        'DiigoBrowser'    => 'DiigoBrowser',
-        // http://www.puffinbrowser.com/index.php
-        'Puffin'            => 'Puffin',
-        // http://mercury-browser.com/index.html
-        'Mercury'          => '\bMercury\b',
-        // http://en.wikipedia.org/wiki/Obigo_Browser
-        'ObigoBrowser' => 'Obigo',
-        // http://en.wikipedia.org/wiki/NetFront
-        'NetFront' => 'NF-Browser',
-        // @reference: http://en.wikipedia.org/wiki/Minimo
-        // http://en.wikipedia.org/wiki/Vision_Mobile_Browser
-        'GenericBrowser'  => 'NokiaBrowser|OviBrowser|OneBrowser|TwonkyBeamBrowser|SEMC.*Browser|FlyFlow|Minimo|NetFront|Novarra-Vision|MQQBrowser|MicroMessenger',
     );
 
     /**
