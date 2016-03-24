@@ -3,7 +3,7 @@
 /**
  * HTTP Package analysis Library
  *
- * goitt:"Every is possible, easy to analysis http package."
+ * @author goitt:"Every is possible, easy to analysis http package."
  *
  *
  */
@@ -51,6 +51,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis manage
+     * @return array
      */
     public function analysisResult(){
         $this->_urlInfoAnalysis();
@@ -63,6 +64,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis server info for url and sth.
+     * @return void URL analyis set in result
      */
     private function _urlInfoAnalysis(){
         $uri = $this->httpServers['REQUEST_URI'];
@@ -84,6 +86,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis time info form server.
+     * @return void time analysis set in result
      */
     private function _timeInfoAnalysis(){
         $this->result['create_time'] = isset($this->httpServers['REQUEST_TIME']) ? $this->httpServers['REQUEST_TIME']:time();
@@ -91,6 +94,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis ip info form server.
+     * @return void IP analysis result set in result
      */
     private function _iPInfoAnalysis(){
         $ip = $this->_getClientIp();
@@ -102,6 +106,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis user agent.
+     * @return void
      */
     private function _userAgentInfoAnalysis(){
         $this->result['user_agent'] = isset($this->httpServers['HTTP_USER_AGENT']) ? $this->httpServers['HTTP_USER_AGENT']:'';
@@ -110,6 +115,7 @@ class Http_Package_Analysis{
 
     /**
      * Analysis user equipment from server.
+     * @return void
      */
     private function _userEquipInfoAnalysis(){
         $equipment_info = self::getServerEquipmentInfo($this->httpServers);
