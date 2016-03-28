@@ -207,7 +207,8 @@ class Http_Package_Analysis{
         if(!$result['data']){
             return $defaultResult;
         }
-        require_once('StringToPY.php');
+        $base_path = dirname(__FILE__);
+        require_once($base_path.DIRECTORY_SEPARATOR.'StringToPY.php');
         $stringtopyClass = new StringToPY();
         $result['data']['city_en'] = $stringtopyClass->encode($result['data']['city']);
         return $result['data'];
