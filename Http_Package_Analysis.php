@@ -133,7 +133,8 @@ class Http_Package_Analysis{
      * @return array
      */
     static public function getServerEquipmentInfo($server){
-        require_once('Mobile_Detect.php');
+        $base_path = dirname(__FILE__);
+        require_once($base_path.DIRECTORY_SEPARATOR.'Mobile_Detect.php');
         $result = array();
         $detect = new Mobile_Detect($server);
         $isMobile = $detect->isMobile();
@@ -150,7 +151,7 @@ class Http_Package_Analysis{
             $result['equipment_os'] = $tmpArr[1];
             $result['equipment_browser'] = $tmpArr[2];
         }else{
-            require_once('PC_User_Agent.php');
+            require_once($base_path.DIRECTORY_SEPARATOR.'PC_User_Agent.php');
             $pcUserAgent = new PC_User_Agent($server);
             $result['equipment_type'] = 'pc';
             $browserRules = $pcUserAgent->getBrowsers();
