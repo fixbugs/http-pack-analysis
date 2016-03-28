@@ -102,6 +102,7 @@ class Http_Package_Analysis{
         $this->result['ip_md5'] = md5($ip);
         $city_info = self::getCityInfoByIp($ip);
         $this->result = array_merge($this->result, $city_info);
+        $this->result['ip_result'] = $city_info;
     }
 
     /**
@@ -123,6 +124,7 @@ class Http_Package_Analysis{
         $this->result['platform'] = $equipment_info['equipment_os'] ? $equipment_info['equipment_os']:'';
         $this->result['equipment_type'] = $equipment_info['equipment_type'] ? $equipment_info['equipment_type']:'';
         $this->result['user_browser'] = $equipment_info['equipment_browser'] ? $equipment_info['equipment_browser']:'';
+        $this->result['equipment_info'] = $equipment_info;
     }
 
     /**
