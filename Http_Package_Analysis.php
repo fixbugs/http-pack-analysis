@@ -261,8 +261,7 @@ class Http_Package_Analysis{
      * @param bool $checkProxy Is need to check proxy
      * @return string
      */
-    private function _getClientIp($checkProxy = true)
-    {
+    private function _getClientIp($checkProxy = true){
         $ip = '127.0.0.1';
         if($checkProxy && isset($this->httpServers['HTTP_CLIENT_IP'])){
             $ip = $this->httpServers['HTTP_CLIENT_IP'];
