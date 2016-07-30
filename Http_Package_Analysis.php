@@ -169,7 +169,7 @@ class Http_Package_Analysis{
                     break;
                 }
             }
-            $result['equipment_os'] = $system ? $system:'';
+            $result['equipment_os'] = isset($system) ? $system:'';
             $result['equipment'] = '';
         }
         return $result;
@@ -182,7 +182,7 @@ class Http_Package_Analysis{
      */
     static public function getCityInfoByIp($ip){
         $url = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
-        $res = self::curlGet($url);
+        $result = self::curlGet($url);
         $defaultResult = array(
             'country' => '未知ip',
             'country' => '0',
@@ -199,10 +199,10 @@ class Http_Package_Analysis{
             'isp_id' => '',
             'ip' => $ip,
         );
-        if($res['result']){
-            $result = json_decode($res['result'], true);
-            if($result['city'] == '省直辖县级行政区划' && $result['county']){
-                $result['city'] = $result['county'];
+        if($result['result']){
+            $result = json_decode($result['result'], true);
+            if($result['data']['city'] == '省直辖县级行政区划' && $result['data']['county']){
+                $result['data']['city'] = $result['data']['county'];
             }
         }else{
             return $defaultResult;
