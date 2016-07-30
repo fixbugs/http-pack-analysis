@@ -201,6 +201,9 @@ class Http_Package_Analysis{
         );
         if($res['result']){
             $result = json_decode($res['result'], true);
+            if($result['city'] == '省直辖县级行政区划' && $result['county']){
+                $result['city'] = $result['county'];
+            }
         }else{
             return $defaultResult;
         }
