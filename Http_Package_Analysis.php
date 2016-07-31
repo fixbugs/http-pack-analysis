@@ -236,7 +236,7 @@ class Http_Package_Analysis{
         if(isset($header['host'])){
             if(preg_match('/^[0-9]{1,3}(\.[0-9]{1,3}){3}$/', $header['host'])){
                 $ip = $header['host'];
-                $host = get_url_domain($url);
+                $host = self::get_url_domain($url);
                 if($host){
                     $setheader = array("Host:".$host);
                     $url = preg_replace("/{$host}/", $ip, $url, 1);
@@ -257,6 +257,18 @@ class Http_Package_Analysis{
         $result['result'] = curl_exec($ch);
         curl_close($ch);
         return $result;
+    }
+
+    /**
+     * get url base domain
+     * @param string $url
+     * @return bool or string
+     */
+    static public function get_url_domain($url){
+        if(preg_match('/^(https?:\/\/)?([a-z0-9.-]+)(\/.*)?$/i', $url,$matches)){
+            return $matches[2];
+        }
+        return false;
     }
 
     /**
